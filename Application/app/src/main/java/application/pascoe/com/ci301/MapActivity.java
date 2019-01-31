@@ -97,19 +97,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     }
 
                     @Override
-                    public void onStatusChanged(String s, int i, Bundle bundle) {
-
-                    }
+                    public void onStatusChanged(String s, int i, Bundle bundle) {}
 
                     @Override
-                    public void onProviderEnabled(String s) {
-
-                    }
+                    public void onProviderEnabled(String s) {}
 
                     @Override
-                    public void onProviderDisabled(String s) {
-
-                    }
+                    public void onProviderDisabled(String s) {}
                 });
             }
         });
