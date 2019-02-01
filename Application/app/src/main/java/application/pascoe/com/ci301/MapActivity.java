@@ -8,9 +8,11 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -24,6 +26,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import java.sql.RowId;
+
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final String TAG = "MapActivity";
@@ -35,17 +39,31 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-        final Gameplay gameplay = new Gameplay();
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        updateClue();
         Button checkButton = findViewById(R.id.btn_checkDistance);
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 checkPlayerRange();
+            }
+        });
+
+        final Button btn_showHideClue = findViewById(R.id.btn_showHideClue);
+        btn_showHideClue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CardView cv_clue = findViewById(R.id.cv_clue);
+                if(cv_clue.getVisibility() == cv_clue.VISIBLE) {
+                    cv_clue.setVisibility(cv_clue.INVISIBLE);
+                    btn_showHideClue.setText("SHOW CLUE");
+                }else{
+                    cv_clue.setVisibility(cv_clue.VISIBLE);
+                    btn_showHideClue.setText("HIDE CLUE");
+                }
             }
         });
     }
@@ -56,7 +74,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap.setBuildingsEnabled(true);
         mMap.setMinZoomPreference(Constants.MIN_CAMERA_ZOOM);
         mMap.setMaxZoomPreference(Constants.MAX_CAMERA_ZOOM);
-        //mMap.getUiSettings().setScrollGesturesEnabled(false);
+        mMap.getUiSettings().setScrollGesturesEnabled(false);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -68,44 +86,44 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-                if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
+            if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
 
-                if (location != null) {
-                    double mLat = location.getLatitude();
-                    double mLong = location.getLongitude();
+            if (location != null) {
+                double mLat = location.getLatitude();
+                double mLong = location.getLongitude();
 
-                    LatLng pos = new LatLng(mLat, mLong);
-                    updateLocation(pos);
-                }
+                LatLng pos = new LatLng(mLat, mLong);
+                updateLocation(pos);
+            }
 
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constants.MIN_UPDATE_TIME, Constants.MIN_UPDATE_DISTANCE, new android.location.LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        if (location != null) {
-                            double mLat = location.getLatitude();
-                            double mLong = location.getLongitude();
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, Constants.MIN_UPDATE_TIME, Constants.MIN_UPDATE_DISTANCE, new android.location.LocationListener() {
+                @Override
+                public void onLocationChanged(Location location) {
+                    if (location != null) {
+                        double mLat = location.getLatitude();
+                        double mLong = location.getLongitude();
 
-                            LatLng pos = new LatLng(mLat, mLong);
+                        LatLng pos = new LatLng(mLat, mLong);
 
-                            updateLocation(pos);
-                        }
+                        updateLocation(pos);
                     }
+                }
 
-                    @Override
-                    public void onStatusChanged(String s, int i, Bundle bundle) {}
+                @Override
+                public void onStatusChanged(String s, int i, Bundle bundle) {}
 
-                    @Override
-                    public void onProviderEnabled(String s) {}
+                @Override
+                public void onProviderEnabled(String s) {}
 
-                    @Override
-                    public void onProviderDisabled(String s) {}
-                });
+                @Override
+                public void onProviderDisabled(String s) {}
+            });
             }
         });
     }
@@ -129,23 +147,33 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-                if (location != null) {
-                    double mLat = location.getLatitude();
-                    double mLong = location.getLongitude();
+            if (location != null) {
+                double mLat = location.getLatitude();
+                double mLong = location.getLongitude();
 
-                    LatLng pos = new LatLng(mLat, mLong);
-                    updateLocation(pos);
-                    boolean distanceCheck = Gameplay.checkDistance(pos);
-                    if(distanceCheck){
-                        Toast.makeText(MapActivity.this, "WORKING", Toast.LENGTH_SHORT).show();
-                        // SHOW UI AND NEXT CLUE
-                    }else{
-                        Toast.makeText(MapActivity.this, "NOT IN RANGE", Toast.LENGTH_SHORT).show();
-                    }
+                LatLng pos = new LatLng(mLat, mLong);
+                updateLocation(pos);
+                boolean distanceCheck = Gameplay.checkDistance(pos);
+                if(distanceCheck){
+                    Toast.makeText(MapActivity.this, "WORKING", Toast.LENGTH_SHORT).show();
+                    updateClue();
+                    // SHOW UI AND NEXT CLUE
+                }else{
+                    Toast.makeText(MapActivity.this, "NOT IN RANGE", Toast.LENGTH_SHORT).show();
                 }
             }
+            }
         });
+    }
+
+    public void updateClue(){
+        String[] currentClueArr = Gameplay.getClue();
+        TextView txt_clue = findViewById(R.id.txt_clue);
+        TextView txt_clueNum = findViewById(R.id.txt_clueNumber);
+
+        txt_clue.setText(currentClueArr[1]);
+        txt_clueNum.setText("Clue Number " + (currentClueArr[0]));
     }
 }
