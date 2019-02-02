@@ -3,6 +3,7 @@ package application.pascoe.com.ci301;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
@@ -12,6 +13,7 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -157,6 +159,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 updateLocation(pos);
                 boolean distanceCheck = Gameplay.checkDistance(pos);
                 if(distanceCheck){
+                    playCheckAnimation();
                     Toast.makeText(MapActivity.this, "WORKING", Toast.LENGTH_SHORT).show();
                     updateClue();
                     // SHOW UI AND NEXT CLUE
@@ -176,4 +179,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         txt_clue.setText(currentClueArr[1]);
         txt_clueNum.setText("Clue Number " + (currentClueArr[0]));
     }
+
+    public void playCheckAnimation(){
+        ImageView anim_tick = (ImageView)findViewById(R.id.anim_tick);
+        anim_tick.setVisibility(View.VISIBLE);
+        anim_tick.setBackgroundResource(R.drawable.tick_animation);
+
+        AnimationDrawable tickAnimation = (AnimationDrawable)anim_tick.getBackground();
+        tickAnimation.start();
+    }
+
 }
