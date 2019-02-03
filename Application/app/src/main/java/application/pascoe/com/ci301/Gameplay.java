@@ -5,10 +5,18 @@ import com.google.maps.android.SphericalUtil;
 
 public class Gameplay {
 
-    public static double[] clueLocationsLat = {50.871, 0.578};
-    public static double[] clueLocationsLng = {0.578, 0.578};
-    private static String[] clues = {"Clue 1", "Clue 2"};
+    public static double[] clueLocationsLat = {50.871909, 50.867859, 50.868561, 50.869317, 50.8700337};
+    public static double[] clueLocationsLng = {0.574404, 0.573043, 0.576427, 0.578672, 0.579594};
+    private static String[] clues = {"Outside Kirsty's House", "Outside Grans House", "Primary School", "Kepel Road Bus Stop", "Home", "YOU DID IT!"};
     private static int currentClue = 0;
+
+    public static int GameInitiate(){
+        /*
+        * CODE TO GET THE POSITIONS AND CLUES WOULD BE ADDED HERE
+        */
+        int totalPositions = clueLocationsLat.length;
+        return totalPositions;
+    }
 
     public static boolean checkDistance(LatLng currentPos){
         LatLng cluePos = new LatLng(clueLocationsLat[currentClue], clueLocationsLng[currentClue]);
@@ -21,7 +29,7 @@ public class Gameplay {
         }
     }
 
-    public static String[] getClue(){
+    public static String[] getClue() {
         String currentClueText = Integer.toString(currentClue + 1);
         String[] arrClue = {currentClueText, clues[currentClue]};
         return arrClue;

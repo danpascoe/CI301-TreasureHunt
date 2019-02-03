@@ -10,10 +10,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,23 +27,25 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.sql.RowId;
-
-public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
 
     private static final String TAG = "MapActivity";
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationManager locationManager;
+    private Animation.AnimationListener listener;
+    private AnimationDrawable tickAnimation;
+    private AnimationDrawable crossAnimation;
+    private int TotalPostions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        TotalPostions = Gameplay.GameInitiate();
         updateClue();
         Button checkButton = findViewById(R.id.btn_checkDistance);
         checkButton.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +83,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        //mMap.setMyLocationEnabled(true);
         mMap.setMyLocationEnabled(false);
 
        fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -157,18 +157,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
                 LatLng pos = new LatLng(mLat, mLong);
                 updateLocation(pos);
+
                 boolean distanceCheck = Gameplay.checkDistance(pos);
+
                 if(distanceCheck){
-                    playCheckAnimation();
-                    Toast.makeText(MapActivity.this, "WORKING", Toast.LENGTH_SHORT).show();
+                    //playCheckAnimation(ClueLocated.InRange);
+                    Toast.makeText(MapActivity.this, "CLUE FOUND", Toast.LENGTH_SHORT).show();
                     updateClue();
-                    // SHOW UI AND NEXT CLUE
                 }else{
-                    Toast.makeText(MapActivity.this, "NOT IN RANGE", Toast.LENGTH_SHORT).show();
+                    //playCheckAnimation(ClueLocated.OutOfRange);
+                    Toast.makeText(MapActivity.this, "CLUE NOT FOUND", Toast.LENGTH_SHORT).show();
                 }
             }
             }
         });
+    }
+
+    public void playCheckAnimation(ClueLocated rangeCheck){
+
     }
 
     public void updateClue(){
@@ -176,17 +182,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         TextView txt_clue = findViewById(R.id.txt_clue);
         TextView txt_clueNum = findViewById(R.id.txt_clueNumber);
 
-        txt_clue.setText(currentClueArr[1]);
+        if(Integer.parseInt(currentClueArr[0]) >= (TotalPostions + 1)){
+            endGame();
+            return;
+        }
+
         txt_clueNum.setText("Clue Number " + (currentClueArr[0]));
+        txt_clue.setText(currentClueArr[1]);
     }
 
-    public void playCheckAnimation(){
-        ImageView anim_tick = (ImageView)findViewById(R.id.anim_tick);
-        anim_tick.setVisibility(View.VISIBLE);
-        anim_tick.setBackgroundResource(R.drawable.tick_animation);
-
-        AnimationDrawable tickAnimation = (AnimationDrawable)anim_tick.getBackground();
-        tickAnimation.start();
+    public void endGame(){
+        Button checkButton = findViewById(R.id.btn_checkDistance);
+        TextView txt_clue = findViewById(R.id.txt_clue);
+        TextView txt_clueNum = findViewById(R.id.txt_clueNumber);
+        txt_clue.setText("You did it!");
+        txt_clueNum.setText("Congratulations");
+        checkButton.setEnabled(false);
     }
-
 }
