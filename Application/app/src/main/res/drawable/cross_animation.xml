@@ -2,6 +2,8 @@
 
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot="true">
     <item android:duration="1"
+        android:drawable="@drawable/cross_00"/>
+    <item android:duration="1"
         android:drawable="@drawable/cross_01"/>
     <item android:duration="1"
         android:drawable="@drawable/cross_02"/>
@@ -119,4 +121,6 @@
         android:drawable="@drawable/cross_58"/>
     <item android:duration="1"
         android:drawable="@drawable/cross_59"/>
+    <item android:duration="1"
+        android:drawable="@drawable/cross_60"/>
 </animation-list>

@@ -13,6 +13,7 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -161,11 +162,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
                 boolean distanceCheck = Gameplay.checkDistance(pos);
 
                 if(distanceCheck){
-                    //playCheckAnimation(ClueLocated.InRange);
+                    playCheckAnimation(ClueLocated.InRange);
                     Toast.makeText(MapActivity.this, "CLUE FOUND", Toast.LENGTH_SHORT).show();
                     updateClue();
                 }else{
-                    //playCheckAnimation(ClueLocated.OutOfRange);
+                    playCheckAnimation(ClueLocated.OutOfRange);
                     Toast.makeText(MapActivity.this, "CLUE NOT FOUND", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -173,8 +174,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
         });
     }
 
-    public void playCheckAnimation(ClueLocated rangeCheck){
-
+    public void playCheckAnimation(ClueLocated rangeCheck) {
+        if(rangeCheck == ClueLocated.InRange) {
+            ImageView anim_tick = findViewById(R.id.anim_tick);
+            anim_tick.setBackgroundResource(R.drawable.tick_animation);
+            AnimationDrawable tickAnimation = (AnimationDrawable) anim_tick.getBackground();
+            tickAnimation.stop();
+            tickAnimation.start();
+        }else{
+            ImageView anim_cross = findViewById(R.id.anim_cross);
+            anim_cross.setBackgroundResource(R.drawable.cross_animation);
+            AnimationDrawable crossAnimation = (AnimationDrawable) anim_cross.getBackground();
+            crossAnimation.stop();
+            crossAnimation.start();
+        }
     }
 
     public void updateClue(){

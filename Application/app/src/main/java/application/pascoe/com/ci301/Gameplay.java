@@ -5,9 +5,9 @@ import com.google.maps.android.SphericalUtil;
 
 public class Gameplay {
 
-    public static double[] clueLocationsLat = {50.871909, 50.867859, 50.868561, 50.869317, 50.8700337};
-    public static double[] clueLocationsLng = {0.574404, 0.573043, 0.576427, 0.578672, 0.579594};
-    private static String[] clues = {"Outside Kirsty's House", "Outside Grans House", "Primary School", "Kepel Road Bus Stop", "Home", "YOU DID IT!"};
+    public static double[] clueLocationsLat = {50.871909, 50.867859, 50.868561, 50.869317, 50.8700337 , 0.4545};
+    public static double[] clueLocationsLng = {0.574404, 0.573043, 0.576427, 0.578672, 0.579594, 75.000};
+    private static String[] clues = {"Outside Kirsty's House", "Outside Grans House", "Primary School", "Kepel Road Bus Stop", "Home", "OUT OF RANGE CLUE FOR DEBUG", "YOU DID IT!"};
     private static int currentClue = 0;
 
     public static int GameInitiate(){

@@ -1,6 +1,7 @@
 package application.pascoe.com.ci301;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -24,14 +25,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkPermissions();
-        Button button = findViewById(R.id.btn_start);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button startButton = findViewById(R.id.btn_start);
+        Button quitButton = findViewById(R.id.btn_quit);
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(fineLocationPermissionGranted && coarseLocationPermissionGranted) {
                     Intent intent = new Intent(MainActivity.this, MapActivity.class);
                     startActivity(intent);
                 }
+            }
+        });
+        quitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.exit(0);
             }
         });
     }
