@@ -1,4 +1,4 @@
-package application.pascoe.com.ci301;
+package application.pascoe.com.ci301.utility;
 
 import android.Manifest;
 import android.content.Context;
@@ -27,6 +27,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+
+import application.pascoe.com.ci301.R;
+import application.pascoe.com.ci301.constants.Constants;
+import application.pascoe.com.ci301.gameplay.ClueLocated;
+import application.pascoe.com.ci301.gameplay.Gameplay;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
 
@@ -151,25 +156,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
             @Override
             public void onSuccess(Location location) {
             locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (location != null) {
+                    double mLat = location.getLatitude();
+                    double mLong = location.getLongitude();
 
-            if (location != null) {
-                double mLat = location.getLatitude();
-                double mLong = location.getLongitude();
+                    LatLng pos = new LatLng(mLat, mLong);
+                    updateLocation(pos);
 
-                LatLng pos = new LatLng(mLat, mLong);
-                updateLocation(pos);
+                    boolean distanceCheck = Gameplay.checkDistance(pos);
 
-                boolean distanceCheck = Gameplay.checkDistance(pos);
-
-                if(distanceCheck){
-                    playCheckAnimation(ClueLocated.InRange);
-                    Toast.makeText(MapActivity.this, "CLUE FOUND", Toast.LENGTH_SHORT).show();
-                    updateClue();
-                }else{
-                    playCheckAnimation(ClueLocated.OutOfRange);
-                    Toast.makeText(MapActivity.this, "CLUE NOT FOUND", Toast.LENGTH_SHORT).show();
+                    if(distanceCheck){
+                        playCheckAnimation(ClueLocated.InRange);
+                        Toast.makeText(MapActivity.this, "CLUE FOUND", Toast.LENGTH_SHORT).show();
+                        updateClue();
+                    }else{
+                        playCheckAnimation(ClueLocated.OutOfRange);
+                        Toast.makeText(MapActivity.this, "CLUE NOT FOUND", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
             }
         });
     }

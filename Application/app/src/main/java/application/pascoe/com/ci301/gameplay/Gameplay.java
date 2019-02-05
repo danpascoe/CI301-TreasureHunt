@@ -1,7 +1,9 @@
-package application.pascoe.com.ci301;
+package application.pascoe.com.ci301.gameplay;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
+
+import application.pascoe.com.ci301.constants.Constants;
 
 public class Gameplay {
 

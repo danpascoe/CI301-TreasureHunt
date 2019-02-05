@@ -1,4 +1,4 @@
-package application.pascoe.com.ci301;
+package application.pascoe.com.ci301.constants;
 
 public class Constants {
     public static final int PERMISSION_REQUEST_ACCESS_FINE_LOCATION = 101;

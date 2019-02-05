@@ -1,7 +1,6 @@
-package application.pascoe.com.ci301;
+package application.pascoe.com.ci301.utility;
 
 import android.Manifest;
-import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -12,6 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import application.pascoe.com.ci301.R;
+import application.pascoe.com.ci301.constants.Constants;
 
 public class MainActivity extends AppCompatActivity {
 
