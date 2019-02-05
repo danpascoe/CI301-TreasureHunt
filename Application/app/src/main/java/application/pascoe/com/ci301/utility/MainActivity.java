@@ -11,9 +11,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+
+import org.w3c.dom.Text;
 
 import application.pascoe.com.ci301.R;
 import application.pascoe.com.ci301.constants.Constants;
+import application.pascoe.com.ci301.sqlite.SQLDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,9 +32,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SQLDatabase db = new SQLDatabase(this);
+
         checkPermissions();
-        Button startButton = findViewById(R.id.btn_start);
+
+        final EditText txt_passwordConfirm = findViewById(R.id.txt_passwordConfirm);
+        final CheckBox cb_createAccount = findViewById(R.id.cb_createAccount);
+        final Button startButton = findViewById(R.id.btn_start);
         Button quitButton = findViewById(R.id.btn_quit);
+
+        cb_createAccount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(cb_createAccount.isChecked()){
+                    txt_passwordConfirm.setVisibility(txt_passwordConfirm.VISIBLE);
+                    startButton.setText("CREATE ACCOUNT");
+                }else{
+                    txt_passwordConfirm.setVisibility(txt_passwordConfirm.INVISIBLE);
+                    startButton.setText("LOGIN");
+                }
+            }
+        });
+
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
