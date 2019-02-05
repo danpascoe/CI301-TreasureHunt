@@ -50,15 +50,25 @@ public class SQLDatabase extends SQLiteOpenHelper {
         }
     }
 
+    public String[] getHashedPassword(String username){
+        if(checkUsername(username) == 0) {
+            String returnInfo[] = {SQLStatus.FAILURE.toString(), "USER DOES NOT EXISTS"};
+            return returnInfo;
+        }
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("SELECT " + COL_3 +  " FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?",new String[]{username});
+        if(result.getCount() == 1){
+            String returnInfo[] = {SQLStatus.SUCCESS.toString(), result.toString()};
+            return returnInfo;
+        }else {
+            String returnInfo[] = {SQLStatus.FAILURE.toString(), "PASSWORD COULD NOT BE RETRIEVED"};
+            return returnInfo;
+        }
+    }
+
     public int checkUsername(String username){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?",new String[]{username});
+        Cursor result = db.rawQuery("SELECT " + COL_2 + " FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?",new String[]{username});
         return result.getCount();
     }
-
-    public SQLStatus getHashedPassword(){
-
-        return SQLStatus.SUCCESS;
-    }
-
 }
