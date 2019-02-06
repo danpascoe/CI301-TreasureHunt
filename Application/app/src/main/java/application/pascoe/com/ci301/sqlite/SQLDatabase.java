@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import application.pascoe.com.ci301.utility.Status;
+
 public class SQLDatabase extends SQLiteOpenHelper {
 
     public static String DATABASE_NAME = "GeoHunt.db";
@@ -32,7 +34,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     public String[] insertUser(String username, String password){
         if(checkUsername(username) != 0) {
-            String returnInfo[] = {SQLStatus.FAILURE.toString(), "USERNAME ALREADY EXISTS"};
+            String returnInfo[] = {Status.FAILED.toString(), "USERNAME ALREADY EXISTS"};
             return returnInfo;
         }else {
             SQLiteDatabase db = this.getWritableDatabase();
@@ -41,27 +43,24 @@ public class SQLDatabase extends SQLiteOpenHelper {
             contentValues.put(COL_3, password);
             long result = db.insert(TABLE_NAME, null, contentValues);
             if (result != -1) {
-                String returnInfo[] = {SQLStatus.SUCCESS.toString(), "USERNAME AND PASSWORD ADDED"};
+                String returnInfo[] = {Status.SUCCESS.toString(), "USERNAME AND PASSWORD ADDED"};
                 return returnInfo;
             } else {
-                String returnInfo[] = {SQLStatus.FAILURE.toString(), "USER COULD NOT BE ADDED TO DATABASE"};
+                String returnInfo[] = {Status.FAILED.toString(), "USER COULD NOT BE ADDED TO DATABASE"};
                 return returnInfo;
             }
         }
     }
 
     public String[] getHashedPassword(String username){
-        if(checkUsername(username) == 0) {
-            String returnInfo[] = {SQLStatus.FAILURE.toString(), "USER DOES NOT EXISTS"};
-            return returnInfo;
-        }
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.rawQuery("SELECT " + COL_3 +  " FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?",new String[]{username});
-        if(result.getCount() == 1){
-            String returnInfo[] = {SQLStatus.SUCCESS.toString(), result.toString()};
+        Cursor cursor = db.rawQuery("SELECT " + COL_3 +  " FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?",new String[]{username});
+        if(cursor.moveToFirst()) {
+            String hashedPassword = cursor.getString(0);
+            String returnInfo[] = {Status.SUCCESS.toString(), hashedPassword};
             return returnInfo;
-        }else {
-            String returnInfo[] = {SQLStatus.FAILURE.toString(), "PASSWORD COULD NOT BE RETRIEVED"};
+        }else{
+            String returnInfo[] = {Status.FAILED.toString(), "PASSWORD COULD NOT BE RETRIEVED"};
             return returnInfo;
         }
     }
@@ -69,6 +68,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
     public int checkUsername(String username){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor result = db.rawQuery("SELECT " + COL_2 + " FROM " + TABLE_NAME + " WHERE " + COL_2 + " = ?",new String[]{username});
-        return result.getCount();
+        int resultCount = result.getCount();
+        return resultCount;
     }
 }
