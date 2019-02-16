@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">CI301</string>
-    <string name="title_activity_map">Map</string>
+    <string name="app_name">Geo Hunt</string>
+    <string name="title_activity_map">Geo Hunt Map</string>
+    <string name="btn_checkDistance">Check</string>
+    <string name="btn_HideClue">Hide Clue</string>
+    <string name="txt_clueNumber">Placeholder</string>
+    <string name="txt_clue">Placeholder</string>
+    <string name="anim_tick">Tick Animation</string>
+    <string name="anim_cross">Cross Animation</string>
 </resources>
