@@ -1,28 +1,27 @@
 package application.pascoe.com.ci301.gameplay;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.maps.android.SphericalUtil;
-
-import application.pascoe.com.ci301.constants.Constants;
+        import com.google.android.gms.maps.model.LatLng;
+        import com.google.maps.android.SphericalUtil;
+        import application.pascoe.com.ci301.constants.Constants;
 
 public class Gameplay {
 
-    public static double[] clueLocationsLat = {50.871909, 50.867859, 50.868561, 50.869317, 50.8700337 , 0.4545};
-    public static double[] clueLocationsLng = {0.574404, 0.573043, 0.576427, 0.578672, 0.579594, 75.000};
-    private static String[] clues = {"Outside Kirsty's House", "Outside Grans House", "Primary School", "Kepel Road Bus Stop", "Home", "OUT OF RANGE CLUE FOR DEBUG", "YOU DID IT!"};
+    public static LatLng[] clueLocations = {new LatLng(50.871909,0.574404)
+                                            ,new LatLng(50.867859,0.573043)
+                                            ,new LatLng(50.868561,0.576427)
+                                            ,new LatLng(50.869317,0.578672)
+                                            ,new LatLng(50.8700337,0.579594)};
+
+    private static String[] clues = {"Outside Kirsty's House", "Outside Gran's House", "Primary School", "Keppel Road Bus Stop", "Home", "OUT OF RANGE CLUE FOR DEBUG", "YOU DID IT!"};
     private static int currentClue = 0;
 
     public static int GameInitiate(){
-        /*
-        * CODE TO GET THE POSITIONS AND CLUES WOULD BE ADDED HERE
-        */
-        int totalPositions = clueLocationsLat.length;
+        int totalPositions = clueLocations.length;
         return totalPositions;
     }
 
     public static boolean checkDistance(LatLng currentPos){
-        LatLng cluePos = new LatLng(clueLocationsLat[currentClue], clueLocationsLng[currentClue]);
-        double distanceCheck = SphericalUtil.computeDistanceBetween(currentPos, cluePos);
+        double distanceCheck = SphericalUtil.computeDistanceBetween(currentPos, clueLocations[currentClue]);
         if(distanceCheck <= Constants.MIN_PLAYER_TO_CLUE_DISTANCE){
             currentClue++;
             return true;

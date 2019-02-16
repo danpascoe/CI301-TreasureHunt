@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import application.pascoe.com.ci301.R;
 import application.pascoe.com.ci301.constants.Constants;
+import application.pascoe.com.ci301.sqlite.SQLDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         checkPermissions();
+
         accountManager = new AccountManager();
         accountManager.initDB(this);
 
@@ -81,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
