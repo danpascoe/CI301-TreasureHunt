@@ -1,6 +1,7 @@
 package application.pascoe.com.ci301.utility;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -19,27 +20,26 @@ import android.widget.Toast;
 
 import application.pascoe.com.ci301.R;
 import application.pascoe.com.ci301.constants.Constants;
-import application.pascoe.com.ci301.sqlite.SQLDatabase;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
+
 
     private static final String TAG = "MainActivity";
     private boolean coarseLocationPermissionGranted = false;
     private boolean fineLocationPermissionGranted = false;
-    AccountManager accountManager;
+    SQLManager SQLManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Context context = this;
         setContentView(R.layout.activity_main);
 
         checkPermissions();
 
-        accountManager = new AccountManager();
-        accountManager.initDB(this);
+        SQLManager = SQLManager.getInstance(context);
 
         final CheckBox requireLogin = findViewById(R.id.cb_RequireLogin);
-
         final EditText txt_user = findViewById(R.id.txt_username);
         final EditText txt_pass = findViewById(R.id.txt_password);
         final EditText txt_passConfirm = findViewById(R.id.txt_passwordConfirm);
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         btn_accountStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         String[] returnMessage = {};
         if(!user.equals("") && !pass.equals("") && !confirmPass.equals("")) {
             if(pass.equals(confirmPass)) {
-                returnMessage = accountManager.createAccount(user, pass);
+                returnMessage = SQLManager.createAccount(user, pass);
                 if(returnMessage[0].equals("FAILED")){
                     showErrorMessage(returnMessage[1]);
                 }else {
@@ -129,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean login(String user, String pass){
         String[] returnMessage = {};
         if(!user.equals("") && !pass.equals("")){
-            returnMessage = accountManager.checkLogin(user, pass);
+            returnMessage = SQLManager.checkLogin(user, pass);
             if(returnMessage[0].equals("SUCCESS")){
                 return true;
             } else { showErrorMessage(returnMessage[1]); }
@@ -149,7 +148,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     fineLocationPermissionGranted = false;
                     Log.d(TAG, "onRequestPermissionsResult: PERMISSIONS DENIED");
-                    // SHOW DIALOG & REPEAT REQUEST PERMISSIONS
                 }
 
             }
@@ -160,7 +158,6 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     coarseLocationPermissionGranted = false;
                     Log.d(TAG, "onRequestPermissionsResult: PERMISSIONS DENIED");
-                    // SHOW DIALOG & REPEAT REQUEST PERMISSIONS
                 }
             }
         }

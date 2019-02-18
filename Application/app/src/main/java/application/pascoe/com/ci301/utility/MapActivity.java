@@ -40,20 +40,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationManager locationManager;
-    private Animation.AnimationListener listener;
-    private AnimationDrawable tickAnimation;
-    private AnimationDrawable crossAnimation;
     private int TotalPostions;
+    SQLManager SQLManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Context context = this;
         setContentView(R.layout.activity_map);
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        TotalPostions = Gameplay.GameInitiate();
+
+        TotalPostions = Gameplay.GameInitiate(this);
+
         updateClue();
+
         Button checkButton = findViewById(R.id.btn_checkDistance);
         checkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +64,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
                 checkPlayerRange();
             }
         });
+
+        SQLManager = SQLManager.getInstance(context);
 
         final Button btn_showHideClue = findViewById(R.id.btn_showHideClue);
         btn_showHideClue.setOnClickListener(new View.OnClickListener() {
@@ -218,4 +223,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
         txt_clueNum.setText("Congratulations");
         checkButton.setEnabled(false);
     }
+
+
 }

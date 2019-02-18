@@ -15,7 +15,6 @@ import application.pascoe.com.ci301.utility.Status;
 public class SQLDatabase extends SQLiteOpenHelper {
 
     public static String DATABASE_NAME = "GeoHunt.db";
-
     public static String TABLE_USERS = "tbl_users";
     public static String USERS_COL_1 = "ID";
     public static String USERS_COL_2 = "USERNAME";
@@ -28,10 +27,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String SQL = "CREATE TABLE " + TABLE_USERS + "(" + USERS_COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + USERS_COL_2 + " TEXT, " + USERS_COL_3 + " TEXT)";
-        String SQL_POSITIONS = "";
         db.execSQL(SQL);
-
-
     }
 
     @Override

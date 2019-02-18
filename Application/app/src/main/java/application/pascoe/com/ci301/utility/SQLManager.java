@@ -1,23 +1,29 @@
 package application.pascoe.com.ci301.utility;
 
         import android.content.Context;
-        import android.content.ContextWrapper;
-        import android.os.Bundle;
-        import android.support.v7.widget.DialogTitle;
-        import android.util.Log;
 
         import application.pascoe.com.ci301.security.PasswordHash;
         import application.pascoe.com.ci301.sqlite.SQLDatabase;
 
-        import static android.content.ContentValues.TAG;
+public class SQLManager {
 
-public class AccountManager {
+    private SQLManager SQLManager;
+    private SQLManager(Context context){
+        initDB(context);
+    }
 
-    private static final String TAG = "AccountManager";
-    public SQLDatabase db;
+    private static final String TAG = "SQLManager";
+    private SQLDatabase db;
 
-    public void initDB(Context context){
+    private void initDB(Context context){
         db = new SQLDatabase(context);
+    }
+
+    public SQLManager getInstance(Context context){
+        if(SQLManager == null) {
+            SQLManager = new SQLManager(context);
+        }
+        return SQLManager;
     }
 
     public String[] createAccount(String username, String password){
