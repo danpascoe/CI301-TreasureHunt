@@ -5,8 +5,7 @@ package application.pascoe.com.ci301.gameplay;
         import com.google.android.gms.maps.model.LatLng;
         import com.google.maps.android.SphericalUtil;
         import application.pascoe.com.ci301.constants.Constants;
-        import application.pascoe.com.ci301.utility.MapActivity;
-        import application.pascoe.com.ci301.utility.SQLManager;
+        import application.pascoe.com.ci301.sqlite.SQLManager;
 
 public class Gameplay {
 

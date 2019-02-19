@@ -1,9 +1,9 @@
-package application.pascoe.com.ci301.utility;
+package application.pascoe.com.ci301.sqlite;
 
         import android.content.Context;
 
         import application.pascoe.com.ci301.security.PasswordHash;
-        import application.pascoe.com.ci301.sqlite.SQLDatabase;
+        import application.pascoe.com.ci301.utility.Status;
 
 public class SQLManager {
 
@@ -54,5 +54,9 @@ public class SQLManager {
 
         String[] returnInfo = {Status.SUCCESS.toString(), "SIGNED IN"};
         return returnInfo;
+    }
+
+    public void getPositions(){
+        
     }
 }

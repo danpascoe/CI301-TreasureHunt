@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity  {
     private static final String TAG = "MainActivity";
     private boolean coarseLocationPermissionGranted = false;
     private boolean fineLocationPermissionGranted = false;
-    SQLManager SQLManager;
+    application.pascoe.com.ci301.sqlite.SQLManager SQLManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,5 +1,6 @@
 package application.pascoe.com.ci301.sqlite;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,11 +15,23 @@ import application.pascoe.com.ci301.utility.Status;
 
 public class SQLDatabase extends SQLiteOpenHelper {
 
-    public static String DATABASE_NAME = "GeoHunt.db";
-    public static String TABLE_USERS = "tbl_users";
-    public static String USERS_COL_1 = "ID";
-    public static String USERS_COL_2 = "USERNAME";
-    public static String USERS_COL_3 = "PASSWORD";
+    private static String DATABASE_NAME = "GeoHunt.db";
+
+    private static String TABLE_USERS = "tbl_users";
+    private static String USERS_COL_1 = "ID";
+    private static String USERS_COL_2 = "USERNAME";
+    private static String USERS_COL_3 = "PASSWORD";
+
+    private static String TABLE_POSTIONS = "tbl_positions";
+    private static String POSITIONS_COL_1 = "ID";
+    private static String POSITIONS_COL_2 = "HUNT_ID";
+    private static String POSITIONS_COL_3 = "LAT";
+    private static String POSITIONS_COL_4 = "LNG";
+
+    private static String TABLE_CLUES = "tbl_clues";
+    private static String CLUES_COL_1 = "ID";
+    private static String CLUES_COL_2 = "POSITION_ID";
+    private static String CLUES_COL_3 = "CLUE";
 
     public SQLDatabase(Context context){
         super(context, DATABASE_NAME, null, 1);
@@ -26,8 +39,13 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String SQL = "CREATE TABLE " + TABLE_USERS + "(" + USERS_COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + USERS_COL_2 + " TEXT, " + USERS_COL_3 + " TEXT)";
-        db.execSQL(SQL);
+        String USER_SQL = "CREATE TABLE " + TABLE_USERS + "(" + USERS_COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + USERS_COL_2 + " TEXT, " + USERS_COL_3 + " TEXT)";
+        String POSITIONS_SQL = "CREATE TABLE " + TABLE_POSTIONS + "(" + POSITIONS_COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + POSITIONS_COL_2 + " STRING, " + POSITIONS_COL_3+ " DOUBLE, " + POSITIONS_COL_4 + "DOUBLE)";
+        String CLUES_SQL =  "CREATE TABLE " + TABLE_CLUES + "(" + CLUES_COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT, " + CLUES_COL_2 + " INTEGER, " + CLUES_COL_3 + " TEXT)";
+
+        db.execSQL(USER_SQL);
+        db.execSQL(POSITIONS_SQL);
+        db.execSQL(CLUES_SQL);
     }
 
     @Override
@@ -76,9 +94,6 @@ public class SQLDatabase extends SQLiteOpenHelper {
         return resultCount;
     }
 
-    public ArrayList<LatLng> getPositions(){
-        ArrayList<LatLng> positions = new ArrayList();
 
-        return positions;
-    }
+
 }
