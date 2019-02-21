@@ -7,4 +7,5 @@
     <string name="txt_clue">Placeholder</string>
     <string name="anim_tick">Tick Animation</string>
     <string name="anim_cross">Cross Animation</string>
+    <string name="txt_NextClue">Next Clue</string>
 </resources>

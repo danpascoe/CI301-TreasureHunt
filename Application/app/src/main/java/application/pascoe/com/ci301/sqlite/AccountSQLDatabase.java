@@ -16,7 +16,6 @@ import application.pascoe.com.ci301.utility.Status;
 public class AccountSQLDatabase extends SQLiteOpenHelper {
 
     private static String DATABASE_NAME = "UserGeoHunt.db";
-
     private static String TABLE_USERS = "tbl_users";
     private static String USERS_COL_1 = "ID";
     private static String USERS_COL_2 = "USERNAME";
