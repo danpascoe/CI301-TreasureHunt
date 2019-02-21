@@ -64,8 +64,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
             }
         });
 
-        SQLManager = SQLManager.getInstance(context);
-
         final Button btn_showHideClue = findViewById(R.id.btn_showHideClue);
         btn_showHideClue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -222,6 +220,4 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
         txt_clueNum.setText("Congratulations");
         checkButton.setEnabled(false);
     }
-
-
 }

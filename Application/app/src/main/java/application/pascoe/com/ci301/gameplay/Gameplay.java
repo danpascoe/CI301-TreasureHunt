@@ -11,20 +11,23 @@ public class Gameplay {
 
     public static LatLng[] LatLngArr;
     public static int[] positionID;
-
     private static GameplaySQLManager sqlManager;
 
-    public static void GameInitiate(Context context){
+    public static void GameInitiate(){
+
         getGameInfo();
     }
 
     public static void getGameInfo(){
-        LatLngArr = sqlManager.getLatLng("default");
-        return;
+
     }
 
-    public boolean checkDistance(){
+    public static boolean checkDistance(LatLng pos) {
         return false;
     }
 
+    public static String getClue(){
+        String[] currentClueSet = {};
+        return "";
+    }
 }

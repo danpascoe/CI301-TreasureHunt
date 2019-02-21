@@ -1,43 +1,41 @@
 package application.pascoe.com.ci301.utility;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+        import android.Manifest;
+        import android.content.Intent;
+        import android.content.pm.PackageManager;
+        import android.support.annotation.NonNull;
+        import android.support.v4.app.ActivityCompat;
+        import android.support.v4.content.ContextCompat;
+        import android.support.v7.app.AppCompatActivity;
+        import android.os.Bundle;
+        import android.util.Log;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.CheckBox;
+        import android.widget.CompoundButton;
+        import android.widget.EditText;
+        import android.widget.TextView;
+        import android.widget.Toast;
 
-import application.pascoe.com.ci301.R;
-import application.pascoe.com.ci301.constants.Constants;
+        import application.pascoe.com.ci301.R;
+        import application.pascoe.com.ci301.constants.Constants;
+        import application.pascoe.com.ci301.sqlite.AccountSQLManager;
 
 public class MainActivity extends AppCompatActivity  {
-
 
     private static final String TAG = "MainActivity";
     private boolean coarseLocationPermissionGranted = false;
     private boolean fineLocationPermissionGranted = false;
-    application.pascoe.com.ci301.sqlite.SQLManager SQLManager;
+    AccountSQLManager accountSQLManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Context context = this;
         setContentView(R.layout.activity_main);
 
-        checkPermissions();
+        accountSQLManager = new AccountSQLManager(this);
 
-        SQLManager = SQLManager.getInstance(context);
+        checkPermissions();
 
         final CheckBox requireLogin = findViewById(R.id.cb_RequireLogin);
         final EditText txt_user = findViewById(R.id.txt_username);
@@ -63,8 +61,6 @@ public class MainActivity extends AppCompatActivity  {
         btn_accountStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 if(fineLocationPermissionGranted && coarseLocationPermissionGranted) {
                     if(!requireLogin.isChecked()){
                         Intent intent = new Intent(MainActivity.this, MapActivity.class);
@@ -98,7 +94,7 @@ public class MainActivity extends AppCompatActivity  {
 
     private void checkPermissions() {
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constants.PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, Constants.PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
         } else {
             fineLocationPermissionGranted = true;
         }
@@ -114,7 +110,7 @@ public class MainActivity extends AppCompatActivity  {
         String[] returnMessage = {};
         if(!user.equals("") && !pass.equals("") && !confirmPass.equals("")) {
             if(pass.equals(confirmPass)) {
-                returnMessage = SQLManager.createAccount(user, pass);
+                returnMessage = accountSQLManager.createAccount(user, pass);
                 if(returnMessage[0].equals("FAILED")){
                     showErrorMessage(returnMessage[1]);
                 }else {
@@ -128,7 +124,7 @@ public class MainActivity extends AppCompatActivity  {
     public boolean login(String user, String pass){
         String[] returnMessage = {};
         if(!user.equals("") && !pass.equals("")){
-            returnMessage = SQLManager.checkLogin(user, pass);
+            returnMessage = accountSQLManager.checkLogin(user, pass);
             if(returnMessage[0].equals("SUCCESS")){
                 return true;
             } else { showErrorMessage(returnMessage[1]); }

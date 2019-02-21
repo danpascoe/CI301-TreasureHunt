@@ -1,29 +1,20 @@
 package application.pascoe.com.ci301.sqlite;
 
         import android.content.Context;
-
         import application.pascoe.com.ci301.security.PasswordHash;
         import application.pascoe.com.ci301.utility.Status;
 
-public class SQLManager {
+public class AccountSQLManager {
 
-    private SQLManager SQLManager;
-    private SQLManager(Context context){
+    public AccountSQLManager(Context context){
         initDB(context);
     }
 
-    private static final String TAG = "SQLManager";
-    private SQLDatabase db;
+    private static final String TAG = "AccountSQLManager";
+    private AccountSQLDatabase db;
 
     private void initDB(Context context){
-        db = new SQLDatabase(context);
-    }
-
-    public SQLManager getInstance(Context context){
-        if(SQLManager == null) {
-            SQLManager = new SQLManager(context);
-        }
-        return SQLManager;
+        db = new AccountSQLDatabase(context);
     }
 
     public String[] createAccount(String username, String password){
@@ -54,9 +45,5 @@ public class SQLManager {
 
         String[] returnInfo = {Status.SUCCESS.toString(), "SIGNED IN"};
         return returnInfo;
-    }
-
-    public void getPositions(){
-        
     }
 }
