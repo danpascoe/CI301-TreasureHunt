@@ -23,20 +23,20 @@ package application.pascoe.com.ci301.utility;
 
 public class MainActivity extends AppCompatActivity  {
 
+
     private static final String TAG = "MainActivity";
+    AccountSQLManager accountSQLManager;
+
+    // PERMISSION CHECK BOOLEANS
     private boolean coarseLocationPermissionGranted = false;
     private boolean fineLocationPermissionGranted = false;
-    AccountSQLManager accountSQLManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        accountSQLManager = new AccountSQLManager(this);
-
-        checkPermissions();
-
+        // SET UP UI LISTENERS
         final CheckBox requireLogin = findViewById(R.id.cb_RequireLogin);
         final EditText txt_user = findViewById(R.id.txt_username);
         final EditText txt_pass = findViewById(R.id.txt_password);
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity  {
         final Button btn_accountStart = findViewById(R.id.btn_start);
         Button quitButton = findViewById(R.id.btn_quit);
 
+        // UPDATE UI FOR CREATING ACCOUNT
         cb_createAccount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 
+
+        // START MAP ACTIVITY
         btn_accountStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,12 +81,16 @@ public class MainActivity extends AppCompatActivity  {
                 }
             }
         });
+
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 System.exit(0);
             }
         });
+
+        accountSQLManager = new AccountSQLManager(this);
+        checkPermissions();
     }
 
     @Override

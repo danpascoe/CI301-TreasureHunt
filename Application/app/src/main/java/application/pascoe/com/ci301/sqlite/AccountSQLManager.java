@@ -1,8 +1,8 @@
 package application.pascoe.com.ci301.sqlite;
 
-        import android.content.Context;
-        import application.pascoe.com.ci301.security.PasswordHash;
-        import application.pascoe.com.ci301.utility.Status;
+import android.content.Context;
+import application.pascoe.com.ci301.security.PasswordHash;
+import application.pascoe.com.ci301.utility.Status;
 
 public class AccountSQLManager {
 

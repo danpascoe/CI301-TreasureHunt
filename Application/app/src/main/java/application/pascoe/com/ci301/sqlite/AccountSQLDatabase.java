@@ -59,7 +59,7 @@ public class AccountSQLDatabase extends SQLiteOpenHelper {
 
     public String[] getHashedPassword(String username){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT " + USERS_COL_3 +  " FROM " + TABLE_USERS + " WHERE " + USERS_COL_2 + " = ?",new String[]{username});
+        Cursor cursor = db.rawQuery("SELECT " + USERS_COL_3 +  " FROM " + TABLE_USERS + " WHERE " + USERS_COL_2 + " = ?", new String[]{username});
         if(cursor.moveToFirst()) {
             String hashedPassword = cursor.getString(0);
             String returnInfo[] = {Status.SUCCESS.toString(), hashedPassword};

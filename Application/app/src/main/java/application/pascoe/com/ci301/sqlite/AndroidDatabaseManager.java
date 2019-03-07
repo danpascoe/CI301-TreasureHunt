@@ -1,4 +1,4 @@
-package application.pascoe.com.ci301.utility;//add your package name here example: package com.example.dbm;
+package application.pascoe.com.ci301.sqlite;//add your package name here example: package com.example.dbm;
 
 //all required import files
 import java.util.ArrayList;
@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,8 +29,6 @@ import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import application.pascoe.com.ci301.sqlite.GameplaySQLDatabase;
 
 public class AndroidDatabaseManager extends Activity implements OnItemClickListener {
 

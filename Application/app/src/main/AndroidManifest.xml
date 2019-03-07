@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".utility.AndroidDatabaseManager"
+        <activity android:name=".sqlite.AndroidDatabaseManager"
             android:label="@string/app_name"/>
 
 
@@ -37,7 +37,7 @@
 
         <activity
             android:name=".utility.MapActivity"
-            android:label="@string/title_activity_map"></activity>
+            android:label="@string/title_activity_map"/>
     </application>
 
 </manifest>

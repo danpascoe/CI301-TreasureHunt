@@ -33,6 +33,7 @@ import application.pascoe.com.ci301.R;
 import application.pascoe.com.ci301.constants.Constants;
 import application.pascoe.com.ci301.gameplay.ClueLocated;
 import application.pascoe.com.ci301.gameplay.Gameplay;
+import application.pascoe.com.ci301.sqlite.AndroidDatabaseManager;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
 
@@ -245,8 +246,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
             AnimationDrawable crossAnimation = (AnimationDrawable) anim_cross.getBackground();
             crossAnimation.stop();
             crossAnimation.start();
+            }
         }
-    }
 
     public void endGame(){
         Button checkButton = findViewById(R.id.btn_checkDistance);
@@ -255,7 +256,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
         txt_clue.setText("You did it!");
         txt_clueNum.setText("Congratulations");
         checkButton.setEnabled(false);
-    }
+        }
 
     public void huntActive(){
         CardView cv_clue = findViewById(R.id.cv_clue);

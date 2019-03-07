@@ -45,7 +45,7 @@ public class GameplaySQLDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertMockData(SQLiteDatabase db){
+     private void insertMockData(SQLiteDatabase db){
         String HUNT_ID = "default";
         double[] mockLatData = {50.871909, 50.867859, 50.868561, 50.869317, 50.8700337};
         double[] mockLngData = {0.574404, 0.573043, 0.576427, 0.578672, 0.579594};
@@ -55,8 +55,8 @@ public class GameplaySQLDatabase extends SQLiteOpenHelper {
                             , "My Primary School", "Blacklands Primary", "Osbourne Close"
                             , "Bus Stop"
                             , "Woodbrook Road", "Home"};
-        int[] mockCluePosID = {1, 1, 1, 2, 2, 3, 3, 3, 4, 5, 5 };
 
+        int[] mockCluePosID = {1, 1, 1, 2, 2, 3, 3, 3, 4, 5, 5 };
         for (int i = 0; i < mockLatData.length; i++) {
             ContentValues contentValues = new ContentValues();
             contentValues.put(POSITIONS_COL_2, HUNT_ID);
