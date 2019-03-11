@@ -162,15 +162,15 @@ public class MainActivity extends AppCompatActivity  {
                     coarseLocationPermissionGranted = false;
                     Log.d(TAG, "onRequestPermissionsResult: PERMISSIONS DENIED");
                 }
-            }
+}
         }
-    }
+                }
 
-    public void showErrorMessage(String message){
+public void showErrorMessage(String message){
         TextView txt_message = findViewById(R.id.txt_messageToUser);
         txt_message.setText(message);
         txt_message.setVisibility(View.VISIBLE);
-    }
+        }
 
     public void resetUI(){
         final EditText txt_user = findViewById(R.id.txt_username);

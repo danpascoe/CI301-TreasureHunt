@@ -1,5 +1,4 @@
 package application.pascoe.com.ci301.gameplay;
-
 import android.content.Context;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.SphericalUtil;
@@ -14,6 +13,7 @@ public class Gameplay {
     private int currentPosition;
     private int totalPositions;
 
+    //INITIATES THE GAME, CREATES DB, AND GETS GAME INFO BASED ON THE HUNT ID PASSED IN
     public void GameInitiate(Context context, String huntID){
         db = new GameplaySQLDatabase(context);
         getGameInfo(huntID);
@@ -21,7 +21,7 @@ public class Gameplay {
     }
 
     private void getGameInfo(String huntID){
-        if(huntID != "default"){ huntID = "default";}
+        if(!huntID.equals("default")){ huntID = "default";}
         LatLngArr = getPositions(huntID);
     }
 
@@ -51,7 +51,6 @@ public class Gameplay {
     }
 
     public String[] getClues(){
-        String[] currentClueSet = db.getClues(positionID[currentPosition]);
-        return currentClueSet;
+        return db.getClues(positionID[currentPosition]);
     }
 }
