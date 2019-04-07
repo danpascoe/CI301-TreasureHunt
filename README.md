@@ -34,3 +34,31 @@ The Geo Treasure Hunt Game is a game in which a player must follow the clues in 
   Added endgame condition to check if last clue has been found
   Disabled animations while searching for onAnimationEnd()
   Added ClueLocated Enum
+
+### 05-02-2019
+  Added SQLite Database
+  Created getHashedPassword Method
+  Fixed Animation Issues
+  
+### 06-02-2019
+  Added AccountManager Class
+
+### 16-02-2019
+  Added Map Style JSON
+  Added UI for MapActivity
+  
+### 18-02-2019
+  Added Groundwork for Gameplay SQL
+  
+### 19-02-2019
+  Continued work on GameplaySQL
+  
+### 21-02-2019
+  Added Gameplay DB
+  Created GameplayDatabase and Manager Class
+  
+### 07-03-2019
+  Fixed UTF-8 Android Studio Issues
+  
+### 11-03-2019
+  Started Testing Phase
