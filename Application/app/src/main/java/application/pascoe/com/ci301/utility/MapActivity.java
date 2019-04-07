@@ -7,9 +7,8 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
 import android.location.LocationManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-
+import android.support.v4.app.FragmentActivity;
 import application.pascoe.com.ci301.R;
 import application.pascoe.com.ci301.constants.Constants;
 import application.pascoe.com.ci301.gameplay.ClueLocated;
@@ -101,14 +100,14 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
         btn_showHideClue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            CardView cv_clue = findViewById(R.id.cv_clue);
-            if(cv_clue.getVisibility() == cv_clue.VISIBLE) {
-                cv_clue.setVisibility(cv_clue.INVISIBLE);
-                btn_showHideClue.setText("SHOW CLUE");
-            }else{
-                cv_clue.setVisibility(cv_clue.VISIBLE);
-                btn_showHideClue.setText("HIDE CLUE");
-            }
+                CardView cv_clue = findViewById(R.id.cv_clue);
+                if(cv_clue.getVisibility() == cv_clue.VISIBLE) {
+                    cv_clue.setVisibility(cv_clue.INVISIBLE);
+                    btn_showHideClue.setText("SHOW CLUE");
+                }else{
+                    cv_clue.setVisibility(cv_clue.VISIBLE);
+                    btn_showHideClue.setText("HIDE CLUE");
+                }
             }
         });
     }
@@ -196,15 +195,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
         fusedLocationClient.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location){
-            LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
-            boolean distanceCheck = gameplay.checkDistance(currentPosition);
+                LatLng currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+                boolean distanceCheck = gameplay.checkDistance(currentPosition);
 
-            if(distanceCheck){
-                playCheckAnimation(ClueLocated.InRange);
-                updateClueSet();
-            }else{
-                playCheckAnimation(ClueLocated.OutOfRange);
-            }
+                if(distanceCheck){
+                    playCheckAnimation(ClueLocated.InRange);
+                    updateClueSet();
+                }else{
+                    playCheckAnimation(ClueLocated.OutOfRange);
+                }
             }
         });
     }
@@ -246,8 +245,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
             AnimationDrawable crossAnimation = (AnimationDrawable) anim_cross.getBackground();
             crossAnimation.stop();
             crossAnimation.start();
-            }
         }
+    }
 
     public void endGame(){
         Button checkButton = findViewById(R.id.btn_checkDistance);
@@ -256,7 +255,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback{
         txt_clue.setText("You did it!");
         txt_clueNum.setText("Congratulations");
         checkButton.setEnabled(false);
-        }
+    }
 
     public void huntActive(){
         CardView cv_clue = findViewById(R.id.cv_clue);
