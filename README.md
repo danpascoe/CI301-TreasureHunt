@@ -4,7 +4,7 @@ CI301 Individual Project Repo
 The Geo Treasure Hunt Game is a game in which a player must follow the clues in order to find the last point. 
 
 ## Commits
-### 28-01-2018
+### 28-01-2019
   Initial Commit
   Added button & intent to MainActivity
   
